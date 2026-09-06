@@ -58,6 +58,13 @@ size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
 text = "Options"
 
+[node name="SeeDeck" type="Button" parent="Center/Content"]
+custom_minimum_size = Vector2(220, 52)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "See Deck"
+
 [node name="Quit" type="Button" parent="Center/Content" unique_id=693009331]
 custom_minimum_size = Vector2(220, 52)
 layout_mode = 2
@@ -65,4 +72,45 @@ size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
 text = "Quit"
 
+[node name="Deck" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Content" type="VBoxContainer" parent="Deck"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Title" type="Label" parent="Deck/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.83, 0.58, 1)
+theme_override_font_sizes/font_size = 48
+text = "Your Deck"
+horizontal_alignment = 1
+
+[node name="EmptyState" type="Label" parent="Deck/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "No cards designed yet."
+horizontal_alignment = 1
+
+[node name="DeckSize" type="Label" parent="Deck/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Your starting deck will contain 20 cards."
+horizontal_alignment = 1
+
+[node name="Back" type="Button" parent="Deck/Content"]
+custom_minimum_size = Vector2(220, 52)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "Back"
+
+[connection signal="pressed" from="Center/Content/SeeDeck" to="." method="_on_see_deck_pressed"]
 [connection signal="pressed" from="Center/Content/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Deck/Content/Back" to="." method="_on_deck_back_pressed"]
