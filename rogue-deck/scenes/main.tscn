@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://crjjlv44f58v1" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/battle_background.tscn" id="2_background"]
+[ext_resource type="PackedScene" path="res://scenes/attack_card.tscn" id="3_attack"]
 
 [node name="Main" type="Control" unique_id=1478095748]
 layout_mode = 3
@@ -83,20 +84,18 @@ grow_vertical = 2
 
 [node name="Content" type="VBoxContainer" parent="Deck"]
 layout_mode = 2
-theme_override_constants/separation = 24
+theme_override_constants/separation = 12
 
 [node name="Title" type="Label" parent="Deck/Content"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.92, 0.83, 0.58, 1)
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 36
 text = "Your Deck"
 horizontal_alignment = 1
 
-[node name="EmptyState" type="Label" parent="Deck/Content"]
+[node name="AttackCard" parent="Deck/Content" instance=ExtResource("3_attack")]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "No cards designed yet."
-horizontal_alignment = 1
+size_flags_horizontal = 4
 
 [node name="DeckSize" type="Label" parent="Deck/Content"]
 layout_mode = 2

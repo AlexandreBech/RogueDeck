@@ -83,15 +83,20 @@ func _run() -> void:
 			await process_frame
 			check(deck.is_visible_in_tree() and not scene.get_node("Center").is_visible_in_tree(), "See Deck must open the deck and hide the menu")
 			check(back.has_focus(), "Deck entry must focus Back")
-			check(scene.get_node("Deck/Content/EmptyState").text == "No cards designed yet.", "Deck must explain the empty state")
+			await process_frame
+			var displayed_card = scene.get_node("Deck/Content/AttackCard")
+			check(displayed_card.is_visible_in_tree() and displayed_card.definition == load("res://cards/attack.tres"), "Deck must show the designed Attack card")
+			check(displayed_card.get_node("Content/Header/Title").text == "Attack" and displayed_card.get_node("Content/Header/Mana").text == "1 MANA" and displayed_card.get_node("Content/Effect").text == "Deal 1 damage.", "Deck must display canonical Attack statistics")
 			check(scene.get_node("Deck/Content/DeckSize").text == "Your starting deck will contain 20 cards.", "Deck must explain the planned size")
-			check(scene.get_node("Deck/Content").get_child_count() == 4, "Empty deck must contain only heading, explanation, size, and Back; no invented cards")
+			check(scene.get_node("Deck/Content").get_child_count() == 4, "Deck must contain heading, one designed card, size, and Back; no invented cards")
+			check(scene.get_global_rect().encloses(scene.get_node("Deck/Content").get_global_rect()), "Deck card and Back button must fit inside the viewport")
 			back.pressed.emit()
 			await process_frame
 			check(not deck.is_visible_in_tree() and scene.get_node("Center").is_visible_in_tree(), "Back must restore the main menu")
 			check(see_deck.has_focus(), "Back must restore focus to See Deck")
 	scene.queue_free()
 	await process_frame
+	await _check_attack_card()
 	if failures == 0:
 		print("ROGUEDECK_TESTS_OK: %d checks" % checks)
 	else:
@@ -109,4 +114,50 @@ func navigate_focus(backwards: bool) -> void:
 	event = event.duplicate()
 	event.pressed = false
 	Input.parse_input_event(event)
+	await process_frame
+
+
+func _check_attack_card() -> void:
+	var definition = load("res://cards/attack.tres")
+	check(definition is CardDefinition, "Attack must load as a typed card definition")
+	if not definition is CardDefinition:
+		return
+	check(definition.id == &"attack" and definition.display_name == "Attack", "Attack identity must match the ticket")
+	check(definition.mana_cost == 1, "Attack must cost 1 mana")
+	check(definition.damage == 1, "Attack must deal 1 damage")
+	var packed = load("res://scenes/card_preview.tscn")
+	check(packed is PackedScene, "Card preview must load independently")
+	if not packed is PackedScene:
+		return
+	root.size = Vector2i(1280, 720)
+	var preview = packed.instantiate()
+	root.add_child(preview)
+	await process_frame
+	await process_frame
+	var card = preview.get_node("Center/AttackCard")
+	var title = card.get_node("Content/Header/Title")
+	var mana = card.get_node("Content/Header/Mana")
+	var effect = card.get_node("Content/Effect")
+	var artwork = card.get_node("Content/Artwork")
+	check(card.definition == definition, "Preview must use the canonical Attack resource")
+	check(title.text == "Attack" and title.is_visible_in_tree(), "Card must visibly name Attack")
+	check(mana.text == "1 MANA" and mana.is_visible_in_tree(), "Card must visibly cost 1 mana")
+	check(effect.text == "Deal 1 damage." and effect.is_visible_in_tree(), "Card must visibly deal 1 damage")
+	check(artwork.texture is Texture2D and artwork.texture.get_width() > 0, "Sword artwork must import and load")
+	var card_rect: Rect2 = card.get_global_rect()
+	check(preview.get_global_rect().encloses(card_rect), "Card must fit the preview viewport")
+	check(card_rect.get_center().is_equal_approx(preview.get_global_rect().get_center()), "Card must be centered")
+	for label in [title, mana, effect]:
+		check(card_rect.encloses(label.get_global_rect()), "Card text must remain inside its frame")
+	check(not title.get_global_rect().intersects(mana.get_global_rect()), "Title and mana must not overlap")
+	check(not artwork.get_global_rect().intersects(effect.get_global_rect()), "Artwork and effect must not overlap")
+	var alternate = definition.duplicate()
+	alternate.mana_cost = 2
+	alternate.damage = 3
+	card.definition = alternate
+	check(mana.text == "2 MANA" and effect.text == "Deal 3 damage.", "Presentation must derive statistics from the assigned definition")
+	check(definition.mana_cost == 1 and definition.damage == 1, "Preview must not mutate base Attack statistics")
+	card.definition = definition
+	check(mana.text == "1 MANA" and effect.text == "Deal 1 damage.", "Restoring Attack must restore its displayed statistics")
+	preview.queue_free()
 	await process_frame

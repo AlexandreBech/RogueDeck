@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="260" viewBox="0 0 280 260">
+  <!-- Original artwork created for RogueDeck ALE-12; no third-party assets. -->
+  <rect width="280" height="260" rx="12" fill="#251e20"/>
+  <path d="M140 20 247 82v106l-107 52-107-52V82Z" fill="#372329" stroke="#785449" stroke-width="2"/>
+  <circle cx="140" cy="124" r="77" fill="#512b30" stroke="#a7754d" stroke-width="2"/>
+  <path d="M60 180 204 53M77 196 222 69" stroke="#c38355" stroke-width="2" opacity=".45"/>
+  <g transform="rotate(32 140 132)">
+    <path d="M140 30 157 58 150 167h-20L123 58Z" fill="#c7d5d6" stroke="#182126" stroke-width="3"/>
+    <path d="m140 33 1 128h-10l-6-101Z" fill="#f0ede0"/>
+    <path d="M140 59v94" stroke="#6e929c" stroke-width="2"/>
+    <path d="m105 160 35 6 35-6 3 12-38 7-38-7Z" fill="#cca35c" stroke="#35251d" stroke-width="3"/>
+    <path d="M133 178h14v39h-14Z" fill="#744336" stroke="#302027" stroke-width="3"/>
+    <path d="m134 185 12 5m-12 3 12 5m-12 3 12 5" stroke="#bc855d" stroke-width="2"/>
+    <path d="m140 213 10 8-10 10-10-10Z" fill="#cca35c" stroke="#35251d" stroke-width="3"/>
+  </g>
+  <path d="m220 39 3 9 9 3-9 3-3 9-3-9-9-3 9-3Z" fill="#e8c584"/>
+</svg>

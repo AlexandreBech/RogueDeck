@@ -19,26 +19,13 @@ The engine version is an observed repository pin, not an independently verified 
 
 ## Implementation map
 
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-- `rogue-deck/scenes/main.tscn`: startup Control UI, title, and Quit button.
+- `rogue-deck/scenes/main.tscn`: startup Control UI, title, Start / Options / See Deck / Quit buttons, and a deck view displaying the designed Attack card.
 - `rogue-deck/scenes/battle_background.tscn`: reusable, resolution-independent medieval tabletop backdrop, currently demonstrated behind the startup UI.
 - `rogue-deck/scripts/battle_background.gd`: original procedural stone, timber, felt, banner, and candle artwork.
-- `rogue-deck/scripts/main.gd`: initial keyboard focus, quit action, smoke marker.
-=======
-- `rogue-deck/scenes/main.tscn`: startup Control UI, title, and Start and Quit buttons.
-- `rogue-deck/scripts/main.gd`: initial Start-button keyboard focus, quit action, smoke marker.
->>>>>>> theirs
-=======
-- `rogue-deck/scenes/main.tscn`: startup Control UI, title, and Start and Quit buttons.
-- `rogue-deck/scripts/main.gd`: initial Start-button keyboard focus, quit action, smoke marker.
->>>>>>> theirs
-=======
-- `rogue-deck/scenes/main.tscn`: startup Control UI, title, and Start and Quit buttons.
-- `rogue-deck/scripts/main.gd`: initial Start-button keyboard focus, quit action, smoke marker.
->>>>>>> theirs
-- `rogue-deck/tests/test_main.gd`: scene, renderer, title, button, focus, and signal assertions.
+- `rogue-deck/scripts/main.gd`: initial Start-button keyboard focus, deck navigation and focus restoration, quit action, smoke marker.
+- `rogue-deck/cards/attack.tres` and `rogue-deck/scripts/card_definition.gd`: typed Attack definition with 1 mana cost and 1 damage.
+- `rogue-deck/scenes/attack_card.tscn` and `rogue-deck/scripts/card_view.gd`: reusable card presentation shared by the deck view and standalone `rogue-deck/scenes/card_preview.tscn`.
+- `rogue-deck/tests/test_main.gd`: scene, renderer, menu, keyboard navigation, deck view, card data, artwork, and layout assertions.
 - `rogue-deck/export_presets.cfg`: Windows export, excluding tests.
 - `scripts/godot.mjs`: version check, import, tests, export, and smoke launch.
 - `scripts/install-godot.ps1`: pinned Windows template download and optional editor installation.
@@ -47,7 +34,7 @@ The engine version is an observed repository pin, not an independently verified 
 - `docs/tasks/`, `.github/codex/`: durable specifications and agent role prompts.
 - `.github/workflows/`: repository foundation CI plus Godot tests and Windows build.
 
-No gameplay state, save format, randomness strategy, or card loading architecture exists. Keep future rules separate from presentation where practical; do not invent systems from the project name.
+The Attack card loads from a Godot Resource; its presentation derives name, cost, and damage from that resource. No gameplay state, save format, randomness strategy, or full 20-card deck composition exists. Keep future rules separate from presentation where practical; do not invent systems from the project name.
 
 ## Setup and launch
 

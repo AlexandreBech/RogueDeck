@@ -20,7 +20,7 @@ Drawing, discarding, exhausting, and temporary copies are not defined. Do not as
 
 ## Current implementation
 
-The local Godot project contains a startup UI and Quit action only. No card definitions, combat, deck/pile model, rewards, upgrade calculations, run progression, or saves exist. Existing tests cover the shell, not these intended rules.
+The local Godot project contains a startup UI, Options placeholder, See Deck navigation, and Quit action. The first designed card is Attack: 1 mana cost and 1 damage, with a reusable visual card and a typed definition. See Deck displays that card without inventing the other cards or their duplicate counts. No combat, deck/pile model, rewards, upgrade calculations, run progression, or saves exist. Tests cover the shell and card presentation, not playable combat.
 
 ## Decisions for subsequent tickets
 
