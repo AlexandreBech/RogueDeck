@@ -8,6 +8,8 @@ Read [game design](docs/game-design.md), [architecture and setup](docs/architect
 
 Workspace snapshot, 2026-09-06: a local Godot startup screen, Start and Quit buttons, scene tests, and Windows export configuration exist. The Start button has no gameplay destination because combat, cards, upgrades, runs, and saves are not implemented. The engine setup was already uncommitted when ALE-6 began; base commit `1d2eff5` contains workflow scaffolding only. Verify the checkout before relying on this snapshot.
 
+The main menu also offers **See Deck**. It opens an empty deck screen explaining that no cards are designed yet and that the planned starting deck contains 20 cards. **Back** returns to the menu. Card definitions and gameplay remain unimplemented; this view displays no invented cards.
+
 Use Node.js 22+, Git, and the configured Godot 4.7.2 stable editor. Run from the repository directory containing AGENTS.md and .git:
 
 ```sh

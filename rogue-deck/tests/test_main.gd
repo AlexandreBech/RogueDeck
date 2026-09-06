@@ -51,6 +51,26 @@ func _run() -> void:
 	check(quit_button is Button, "Quit button must exist")
 	if quit_button is Button:
 		check(quit_button.pressed.is_connected(Callable(scene, "_on_quit_pressed")), "Quit button must be connected")
+	var see_deck = scene.get_node_or_null("Center/Content/SeeDeck")
+	var deck = scene.get_node_or_null("Deck")
+	var back = scene.get_node_or_null("Deck/Content/Back")
+	check(see_deck is Button and see_deck.text == "See Deck" and not see_deck.disabled, "Menu must offer See Deck")
+	check(deck is Control and not deck.is_visible_in_tree(), "Deck must initially be hidden")
+	check(back is Button and back.text == "Back", "Deck must offer Back")
+	if see_deck is Button and deck is Control and back is Button:
+		check(start_button.get_index() < see_deck.get_index() and see_deck.get_index() < quit_button.get_index(), "See Deck must appear between Start and Quit")
+		for visit in range(2):
+			see_deck.pressed.emit()
+			await process_frame
+			check(deck.is_visible_in_tree() and not scene.get_node("Center").is_visible_in_tree(), "See Deck must open the deck and hide the menu")
+			check(back.has_focus(), "Deck entry must focus Back")
+			check(scene.get_node("Deck/Content/EmptyState").text == "No cards designed yet.", "Deck must explain the empty state")
+			check(scene.get_node("Deck/Content/DeckSize").text == "Your starting deck will contain 20 cards.", "Deck must explain the planned size")
+			check(scene.get_node("Deck/Content").get_child_count() == 4, "Empty deck must contain only heading, explanation, size, and Back; no invented cards")
+			back.pressed.emit()
+			await process_frame
+			check(not deck.is_visible_in_tree() and scene.get_node("Center").is_visible_in_tree(), "Back must restore the main menu")
+			check(see_deck.has_focus(), "Back must restore focus to See Deck")
 	scene.queue_free()
 	await process_frame
 	if failures == 0:
