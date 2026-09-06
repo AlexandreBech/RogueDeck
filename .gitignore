@@ -1,0 +1,18 @@
+# Local credentials and machine configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Repository tooling and generated outputs
+node_modules/
+/artifacts/
+/logs/
+/coverage/
+*.log
+.DS_Store
+Thumbs.db
+
+# Add engine-specific generated cache paths after engine selection.
+# Keep source assets and required asset metadata tracked.

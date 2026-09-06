@@ -1,0 +1,33 @@
+name: Repository foundation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  foundation:
+    name: Repository foundation (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check repository prerequisites
+        run: node scripts/bootstrap.mjs
+      - name: Check foundation only (not game validation)
+        run: node scripts/validate.mjs --repository
+
+# Add a separate game-validation job after engine selection. These checks
+# are deliberately named foundation and must not serve as the game gate.
