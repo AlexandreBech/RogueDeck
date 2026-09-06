@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/battle_background.tscn" id="1_background"]
+[ext_resource type="PackedScene" path="res://scenes/attack_card.tscn" id="2_card"]
+
+[node name="CardPreview" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BattleBackground" parent="." instance=ExtResource("1_background")]
+layout_mode = 1
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AttackCard" parent="Center" instance=ExtResource("2_card")]
+layout_mode = 2
