@@ -18,6 +18,15 @@ func check(condition: bool, message: String) -> void:
 func _run() -> void:
 	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/main.tscn", "Main scene must be configured")
 	check(ProjectSettings.get_setting("rendering/renderer/rendering_method") == "gl_compatibility", "Compatibility renderer must be configured")
+	var background_packed = load("res://scenes/battle_background.tscn")
+	check(background_packed is PackedScene, "Battle background must be a reusable scene")
+	if background_packed is PackedScene:
+		var background_instance = background_packed.instantiate()
+		check(background_instance is Control, "Battle background must use a scalable Control root")
+		if background_instance is Control:
+			check(background_instance.mouse_filter == Control.MOUSE_FILTER_IGNORE, "Battle background must not intercept UI input")
+			check(background_instance.anchor_right == 1.0 and background_instance.anchor_bottom == 1.0, "Battle background must fill its parent")
+		background_instance.free()
 	var packed = load("res://scenes/main.tscn")
 	if not packed is PackedScene:
 		push_error("Main scene could not be loaded")
@@ -27,6 +36,10 @@ func _run() -> void:
 	root.add_child(scene)
 	await process_frame
 	check(scene is Control, "Main scene must be a UI root")
+	var background = scene.get_node_or_null("BattleBackground")
+	check(background is Control, "Main scene must display the battle background")
+	if background is Control:
+		check(scene.get_child(0) == background, "Battle background must render behind title controls")
 	var title = scene.get_node_or_null("Center/Content/Title")
 	check(title is Label and title.text == "RogueDeck", "Title must be visible and correct")
 	var button = scene.get_node_or_null("Center/Content/Quit")
