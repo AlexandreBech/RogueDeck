@@ -21,4 +21,6 @@ Foundation validation checks repository structure only. Bootstrap imports the co
 
 The intended workflow is Linear ticket → specification → implementation → independent GitHub review → human playtest. [Workflow configuration](docs/development-workflow.md) records Ready + agent-ready eligibility. No automatic controller or publishing/review gate is connected; merging remains manual.
 
+After finishing an authorized ticket and its required checks, the agent automatically comments on the Linear ticket with the changes and validation evidence, then moves it to **In Review**. This uses connected Linear write tools; unavailable access or failed updates must be reported explicitly. It does not enable background ticket pickup.
+
 Next gameplay tickets must define card data, combat, and upgrade reward semantics. The local CI workflow now includes Godot tests and a Windows build; a successful hosted run has not been verified for this ticket.

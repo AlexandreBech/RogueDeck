@@ -43,6 +43,10 @@ List blocking decisions or write None. A ready plan has no blocking questions.
 
 Filled by implementer: changed behavior, commands and outcomes, deviations, and unverified acceptance criteria. Preserve the original plan and record justified amendments separately.
 
+## Linear completion handoff
+
+Filled by the direct agent or controller after implementation and required checks: issue identifier, handoff owner, completion comment/reference, verified status, and any error. If write tools are unavailable, preserve the prepared comment here and mark the handoff incomplete. Comment first, then move to In Review; follow AGENTS.md for retries and exceptions.
+
 ## Playtest
 
 List starting state, actions, and expected visible results. Record not run until a playtest actually occurs.
