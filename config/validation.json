@@ -1,7 +1,7 @@
 {
-  "engine": null,
-  "setup": null,
-  "test": null,
-  "build": null,
+  "engine": {"name": "Godot", "version": "4.7.2", "projectFile": "rogue-deck/project.godot"},
+  "setup": {"command": "node", "args": ["scripts/godot.mjs", "import"]},
+  "test": {"command": "node", "args": ["scripts/godot.mjs", "test"]},
+  "build": {"command": "node", "args": ["scripts/godot.mjs", "build"]},
   "timeoutSeconds": 900
 }

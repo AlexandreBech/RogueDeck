@@ -2,16 +2,17 @@
 
 ## Read first
 
-Read `README.md`, `docs/architecture.md`, `docs/game-design.md`, and the relevant `docs/tasks/<ISSUE-ID>.md` before making changes. The repository currently contains workflow scaffolding, not an initialized game. Do not invent implemented systems or silently choose an engine.
+Read `README.md`, `docs/architecture.md`, `docs/game-design.md`, and the relevant `docs/tasks/<ISSUE-ID>.md` before making changes. The project uses Godot 4.7.2 stable, GDScript, Compatibility rendering, and Windows x86_64 export. The project root is `rogue-deck/`. Only a title screen exists; do not invent implemented gameplay systems.
 
 ## Commands
 
 - `node scripts/bootstrap.mjs`: check tooling, repository files, and configured setup.
 - `node scripts/validate.mjs --repository`: check the repository foundation only.
-- `node scripts/validate.mjs`: run foundation checks and configured game tests; fails when unconfigured.
-- `node scripts/build.mjs`: run the configured game build; fails when unconfigured.
+- `node scripts/validate.mjs`: run foundation checks, seven scene checks, and main-scene startup.
+- `node scripts/build.mjs`: export Windows x86_64 and smoke-test the executable on Windows.
 
 Use Node.js 22+ for tooling. Engine requirements belong in `docs/architecture.md` and `config/validation.json`.
+Set `GODOT_BIN` or ignored `config/godot.local.json` to locate an editor, or run `pwsh -File scripts/install-godot.ps1 -InstallEditor` on Windows. Use tabs for GDScript and retain `.uid` and `.import` sidecars in Git. Pin editor and template versions together.
 
 ## Scope and changes
 

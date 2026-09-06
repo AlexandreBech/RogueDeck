@@ -24,10 +24,37 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Check repository prerequisites
-        run: node scripts/bootstrap.mjs
       - name: Check foundation only (not game validation)
         run: node scripts/validate.mjs --repository
 
-# Add a separate game-validation job after engine selection. These checks
-# are deliberately named foundation and must not serve as the game gate.
+  game:
+    name: Godot tests and Windows build
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned editor and Windows templates
+        shell: pwsh
+        run: ./scripts/install-godot.ps1 -InstallEditor
+      - name: Import project
+        run: node scripts/bootstrap.mjs
+      - name: Test scenes and startup
+        run: node scripts/validate.mjs
+      - name: Export and smoke-test Windows executable
+        run: node scripts/build.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RogueDeck-windows
+          path: artifacts/windows/RogueDeck.exe
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Godot-logs
+          path: artifacts/logs/
+          if-no-files-found: ignore

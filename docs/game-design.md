@@ -1,25 +1,38 @@
 # Game design
 
-## Confirmed
+## Confirmed direction
 
-- Project name: RogueDeck.
-- Development is intended to use Linear tickets, Markdown specifications, separate implementation and review agents, and GitHub pull requests.
+Source: [ALE-6 — Build game context](https://linear.app/alexbech/issue/ALE-6/build-game-context), updated 2026-09-06T16:11:56.497Z. These are intended requirements, not implemented gameplay.
 
-No gameplay rules have been supplied or implemented yet. The project name is not a specification for combat, cards, progression, or genre.
+- RogueDeck is a roguelike deck builder.
+- Each run starts with the same 20 cards.
+- Cards cannot be added to or removed from the deck.
+- Cards can be upgraded after each victorious battle. The ticket specifies “3 different upgrade” without defining how they are selected or applied.
+- Upgrades can multiply existing statistics, add to existing statistics, or add extra effects to cards.
 
-## Decisions to establish with the first design tickets
+The progression direction is improving the fixed starting deck through battle rewards. Card acquisition or removal would require an explicit design change.
 
-- Core player experience and gameplay loop.
-- Win/loss conditions and run/session structure.
-- Input methods and target platforms.
-- Rules, resources, progression, and content definitions.
-- Visual direction and asset provenance.
-- Save behavior, accessibility expectations, and performance targets.
+## Examples and boundaries
 
-## Recording decisions
+Two runs must start with the same card composition; specific card definitions and initial draw order are unspecified. An upgrade changes statistics or effects while preserving deck membership and count. Adding a twenty-first card or permanently removing a starting card violates the fixed-deck rule.
 
-For each accepted design decision, record the rule, its rationale, source ticket, examples, and edge cases. Clearly distinguish approved rules from proposals. Tickets that change rules must identify the intended before/after behavior and update regression tests.
+Drawing, discarding, exhausting, and temporary copies are not defined. Do not assume a pile transition means permanent deck removal. Defeat rewards, upgrade persistence across runs, and calculation order are unspecified.
 
-## Acceptance criteria
+## Current implementation
 
-Describe an observable result: given a starting state and player action, what happens? Include invalid actions and boundary cases. Specify timing, randomness/seed, and numeric values when those affect the result. Subjective feel should have a human playtest checklist rather than a fabricated automated pass.
+The local Godot project contains a startup UI and Quit action only. No card definitions, combat, deck/pile model, rewards, upgrade calculations, run progression, or saves exist. Existing tests cover the shell, not these intended rules.
+
+## Decisions for subsequent tickets
+
+These questions do not block documentation but must be answered before their systems are implemented:
+
+- Does “3 different upgrade” mean choosing one of three options, applying three upgrades, or something else? Which cards receive them, and how many cards are upgraded per victory?
+- What are the 20 starting cards, duplicate counts, statistics, and effects?
+- How do turns, draw rules, resources, targets, damage, enemies, and victory/defeat work?
+- How do modifiers stack, round, cap, and interact with effects? Do upgrades last for one run only?
+- What defines encounters, run completion, loss, and progression between runs?
+- What input, visual direction, asset provenance, saves, accessibility, and performance targets are required? Windows export is configured; other targets are unspecified.
+
+## Maintaining context
+
+Record approved rules with source tickets, examples, edge cases, and rationale when supplied. Separate proposals from confirmed requirements. Seed random tests; use observable acceptance criteria and human playtests for subjective feel.

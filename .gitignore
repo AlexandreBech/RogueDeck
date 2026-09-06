@@ -14,5 +14,14 @@ node_modules/
 .DS_Store
 Thumbs.db
 
-# Add engine-specific generated cache paths after engine selection.
-# Keep source assets and required asset metadata tracked.
+# Godot generated caches and local export credentials (any project folder)
+.godot/
+.godot-export-credentials
+/config/godot.local.json
+/.tools/
+
+# Generated exports for the RogueDeck Godot project
+/rogue-deck/builds/
+/rogue-deck/exports/
+
+# Keep project.godot, export_presets.cfg, source assets, .import and .uid files tracked.

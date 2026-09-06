@@ -1,46 +1,24 @@
 # RogueDeck
 
-Repository foundation for a Linear → specification → implementation → GitHub review workflow.
-
-**Current state:** no game project has been initialized. Engine, engine version, target platforms, and game rules still need to be selected. The agent pipeline is documented but not connected or running.
+RogueDeck is a roguelike deck builder built around upgrading a fixed deck. Each run starts with the same 20 cards; cards cannot be added or removed. Victory rewards can upgrade card statistics or add effects. The exact meaning of “3 different upgrade” needs clarification before implementation.
 
 ## Start here
 
-Run these commands from this directory (the directory containing `.git`):
+Read [game design](docs/game-design.md), [architecture and setup](docs/architecture.md), [agent instructions](AGENTS.md), and the relevant [ticket specification](docs/tasks/ALE-6.md).
+
+Workspace snapshot, 2026-09-06: a local Godot startup screen, Quit button, scene tests, and Windows export configuration exist. Combat, cards, upgrades, runs, and saves are not implemented. The engine setup was already uncommitted when ALE-6 began; base commit `1d2eff5` contains workflow scaffolding only. Verify the checkout before relying on this snapshot.
+
+Use Node.js 22+, Git, and the configured Godot 4.7.2 stable editor. Run from the repository directory containing AGENTS.md and .git:
 
 ```sh
-node scripts/bootstrap.mjs
 node scripts/validate.mjs --repository
-```
-
-The tooling needs Node.js 22 or newer and Git. There are no package dependencies to install. Node is only the repository tooling runtime; it does not dictate the game engine or language.
-
-Once the game is initialized and its commands are configured:
-
-```sh
+node scripts/bootstrap.mjs
 node scripts/validate.mjs
 node scripts/build.mjs
 ```
 
-Full validation and build intentionally fail while engine configuration is missing. A passing **Repository foundation** CI check only checks the repository scaffolding, not the game.
+Foundation validation checks repository structure only. Bootstrap imports the configured project. Full validation checks startup UI and scene loading, not gameplay. Build exports Windows x86_64; setup details and limitations are in architecture.
 
-## Documentation
+The intended workflow is Linear ticket → specification → implementation → independent GitHub review → human playtest. [Workflow configuration](docs/development-workflow.md) records Ready + agent-ready eligibility. No automatic controller or publishing/review gate is connected; merging remains manual.
 
-- [Agent instructions](AGENTS.md)
-- [Architecture and engine setup](docs/architecture.md)
-- [Game design decisions](docs/game-design.md)
-- [Workflow and Linear configuration](docs/development-workflow.md)
-- [Ticket specification template](docs/tasks/TEMPLATE.md)
-- [Validation configuration](config/validation.json)
-
-## Finish engine setup
-
-1. Choose the engine, exact version, implementation language, and initial target platform.
-2. Initialize its project here and commit required project settings, source assets, and stable asset identifiers.
-3. Update `.gitignore` for that engine's generated caches. Do not ignore source assets or required metadata.
-4. Configure the setup, test, and build commands in `config/validation.json`; document prerequisites and outputs in `docs/architecture.md`.
-5. Add a meaningful gameplay regression test and a launch/scene-load smoke check.
-6. Verify setup, validation, and build from a fresh checkout on the chosen runner.
-7. Add a required game-validation CI job before enabling automatic implementation.
-
-No initial commit or push is performed by these scripts.
+Next gameplay tickets must define card data, combat, and upgrade reward semantics. The local CI workflow now includes Godot tests and a Windows build; a successful hosted run has not been verified for this ticket.
