@@ -51,6 +51,21 @@ func _run() -> void:
 	check(quit_button is Button, "Quit button must exist")
 	if quit_button is Button:
 		check(quit_button.pressed.is_connected(Callable(scene, "_on_quit_pressed")), "Quit button must be connected")
+	var options_button = scene.get_node_or_null("Center/Content/Options")
+	check(options_button is Button and options_button.text == "Options", "Options button must exist with the correct label")
+	if options_button is Button and start_button is Button and quit_button is Button:
+		check(options_button.is_visible_in_tree() and not options_button.disabled, "Options must be visible and enabled")
+		check(start_button.get_index() < options_button.get_index() and options_button.get_index() < quit_button.get_index(), "Options must appear between Start and Quit")
+		check(options_button.size == start_button.size and options_button.size == quit_button.size, "All menu buttons must have matching dimensions")
+		check(options_button.get_theme_font_size("font_size") == start_button.get_theme_font_size("font_size"), "Options typography must match Start")
+		check(start_button.get_global_rect().end.y <= options_button.global_position.y and options_button.get_global_rect().end.y <= quit_button.global_position.y, "Menu buttons must not overlap")
+		check(scene.get_global_rect().encloses(scene.get_node("Center/Content").get_global_rect()), "Menu content must fit inside the viewport")
+		await navigate_focus(false)
+		check(options_button.has_focus(), "Tab from Start must focus Options")
+		await navigate_focus(false)
+		check(quit_button.has_focus(), "Tab from Options must focus Quit")
+		await navigate_focus(true)
+		check(options_button.has_focus(), "Shift+Tab from Quit must focus Options")
 	scene.queue_free()
 	await process_frame
 	if failures == 0:
@@ -58,3 +73,16 @@ func _run() -> void:
 	else:
 		push_error("%d of %d checks failed" % [failures, checks])
 	quit(1 if failures > 0 else 0)
+
+
+func navigate_focus(backwards: bool) -> void:
+	var event := InputEventKey.new()
+	event.keycode = KEY_TAB
+	event.shift_pressed = backwards
+	event.pressed = true
+	Input.parse_input_event(event)
+	await process_frame
+	event = event.duplicate()
+	event.pressed = false
+	Input.parse_input_event(event)
+	await process_frame
