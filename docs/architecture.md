@@ -19,10 +19,25 @@ The engine version is an observed repository pin, not an independently verified 
 
 ## Implementation map
 
+<<<<<<< ours
+<<<<<<< ours
+<<<<<<< ours
 - `rogue-deck/scenes/main.tscn`: startup Control UI, title, and Quit button.
 - `rogue-deck/scenes/battle_background.tscn`: reusable, resolution-independent medieval tabletop backdrop, currently demonstrated behind the startup UI.
 - `rogue-deck/scripts/battle_background.gd`: original procedural stone, timber, felt, banner, and candle artwork.
 - `rogue-deck/scripts/main.gd`: initial keyboard focus, quit action, smoke marker.
+=======
+- `rogue-deck/scenes/main.tscn`: startup Control UI, title, and Start and Quit buttons.
+- `rogue-deck/scripts/main.gd`: initial Start-button keyboard focus, quit action, smoke marker.
+>>>>>>> theirs
+=======
+- `rogue-deck/scenes/main.tscn`: startup Control UI, title, and Start and Quit buttons.
+- `rogue-deck/scripts/main.gd`: initial Start-button keyboard focus, quit action, smoke marker.
+>>>>>>> theirs
+=======
+- `rogue-deck/scenes/main.tscn`: startup Control UI, title, and Start and Quit buttons.
+- `rogue-deck/scripts/main.gd`: initial Start-button keyboard focus, quit action, smoke marker.
+>>>>>>> theirs
 - `rogue-deck/tests/test_main.gd`: scene, renderer, title, button, focus, and signal assertions.
 - `rogue-deck/export_presets.cfg`: Windows export, excluding tests.
 - `scripts/godot.mjs`: version check, import, tests, export, and smoke launch.

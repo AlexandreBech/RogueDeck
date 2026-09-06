@@ -6,13 +6,13 @@ GitHub repository: `AlexandreBech/RogueDeck`.
 
 Linear workspace/team: AlexBech, team key `ALE`, team ID `9052fbb5-ced6-436d-8510-8426d0540aad`.
 
-The statuses and workspace label below have been created in Linear. No controller, webhook, automated agent invocation, PR publisher, or review gate is connected yet. The repository foundation CI runs only after these files are committed and pushed to GitHub.
+The statuses and workspace label below have been created in Linear. The [local Codex worker](local-codex-worker.md) provides scheduled opt-in pickup using Ready + codex-local + assignment to Alexandre and no cloud delegate. The controller, webhook, PR publisher, and independent review gate described below remain future work. The repository foundation CI runs only after these files are committed and pushed to GitHub.
 
 Direct agents working on an authorized ticket must automatically post a completion comment and move that ticket to **In Review**, following AGENTS.md's Required Linear completion handoff. This is an agent instruction using connected Linear write tools, not a background trigger. If write tools are unavailable, the agent must report the handoff as incomplete and preserve the prepared comment. In future controller-managed runs, the controller is the sole writer.
 
 ## Pickup condition
 
-An eligible issue must belong to the configured team/project, have status **Ready**, and carry **agent-ready**. The label alone is not a trigger. Project mapping still needs configuration. Existing tickets are not automatically opted in.
+For the future controller, an eligible issue must belong to the configured team/project, have status **Ready**, and carry **agent-ready**. Its project mapping still needs configuration. The active local worker instead uses the dedicated queue documented above; agent-ready alone never triggers local pickup. Existing tickets are not automatically opted in.
 
 | Status | ID | Meaning |
 | --- | --- | --- |

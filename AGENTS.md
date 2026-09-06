@@ -46,7 +46,7 @@ For user-authorized ticket implementation, automatically complete this handoff b
 
 This is standing authorization to comment on and move the ticket being implemented. It does not authorize messaging on unrelated issues. Planning alone, incomplete work, blocked criteria, or failed required checks must not trigger In Review. Review-only agents return findings to the handoff owner; they do not repeat the implementation handoff. Use a single writer: the direct agent or the controller, never both.
 
-This handoff does not depend on a commit or PR for explicitly local work. In Review means ready for human review, not merged or independently approved. Automatic ticket pickup and background orchestration are still not connected.
+This handoff does not depend on a commit or PR for explicitly local work. In Review means ready for human review, not merged or independently approved. The user-authorized local scheduled worker uses the opt-in queue in docs/local-codex-worker.md. In that lightweight workflow, write the specification before implementation in the same run; a committed specification is not required. The future controller's separate-stage contract still applies to controller-managed runs.
 
 ## Verification and review guidelines
 
@@ -54,4 +54,4 @@ Add meaningful regression coverage for changed behavior. A game build or reposit
 
 Prioritize correctness, missing acceptance criteria, asset/scene reference failures, save compatibility, performance regressions, and test gaps. Give actionable findings with accurate file and line references. Distinguish verified defects from uncertainty. Re-review after implementation changes; a verdict applies only to its recorded commit.
 
-The repository preparation does not authorize automatic merging, deployment, or ticket pickup.
+The repository preparation alone does not authorize automatic merging, deployment, or ticket pickup. The user's subsequent authorization enables only the local worker's explicit opt-in queue; merging and deployment remain manual.

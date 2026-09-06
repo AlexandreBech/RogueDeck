@@ -42,11 +42,15 @@ func _run() -> void:
 		check(scene.get_child(0) == background, "Battle background must render behind title controls")
 	var title = scene.get_node_or_null("Center/Content/Title")
 	check(title is Label and title.text == "RogueDeck", "Title must be visible and correct")
-	var button = scene.get_node_or_null("Center/Content/Quit")
-	check(button is Button, "Quit button must exist")
-	if button is Button:
-		check(button.has_focus(), "Keyboard focus must start on Quit")
-		check(button.pressed.is_connected(Callable(scene, "_on_quit_pressed")), "Quit button must be connected")
+	var start_button = scene.get_node_or_null("Center/Content/Start")
+	check(start_button is Button and start_button.text == "Start", "Start button must be visible and correctly labeled")
+	if start_button is Button:
+		check(start_button.get_index() < scene.get_node("Center/Content/Quit").get_index(), "Start button must appear before Quit")
+		check(start_button.has_focus(), "Keyboard focus must start on Start")
+	var quit_button = scene.get_node_or_null("Center/Content/Quit")
+	check(quit_button is Button, "Quit button must exist")
+	if quit_button is Button:
+		check(quit_button.pressed.is_connected(Callable(scene, "_on_quit_pressed")), "Quit button must be connected")
 	scene.queue_free()
 	await process_frame
 	if failures == 0:
